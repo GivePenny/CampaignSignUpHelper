@@ -14,4 +14,7 @@ export default defineConfig({
     sourcemap: true,
   },
   publicDir: false,
+  server: {
+    port: 8080,
+  },
 });

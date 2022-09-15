@@ -81,6 +81,9 @@
         </li>
       </ul>
     </main>
-    <script type="module" src="/src/main.ts"></script>
+    <script type="module">
+      import * as devModule from "./src/main.ts";
+      window.GPCampaignSignUpHelper = devModule;
+    </script>
   </body>
 </html>
