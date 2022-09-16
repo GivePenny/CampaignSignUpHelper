@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/main/service-schema.json
+parameters:
+  - name: "environmentLowerCaseName"
+    type: "string"
+
+steps:
+  - checkout: none
+
+  - task: AzureCLI@1
+    displayName: "${{parameters.environmentLowerCaseName}}: Copy UMD build to CDN (1 hour cache)"
+    inputs:
+      azureSubscription: GivePenny Azure Subscription
+      scriptLocation: inlineScript
+      inlineScript: 'az storage blob upload-batch -d "gp-itops-hosting-sharedassets" -s "$(Pipeline.Workspace)/umd-${{ parameters.environmentLowerCaseName }}" --pattern "*.*" --content-cache-control "public, max-age=3600" --validate-content --account-name "$(CdnStorageResourceAccountName)" --account-key "$(CdnStorageResourceAccountKey)"'

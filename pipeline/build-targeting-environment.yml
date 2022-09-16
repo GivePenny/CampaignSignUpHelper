@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/main/service-schema.json
+
+parameters:
+  - name: targetEnvironmentNameLowerCase
+    type: string
+
+steps:
+  - task: Npm@1
+    displayName: "${{parameters.targetEnvironmentNameLowerCase}}: Build UMD build"
+    inputs:
+      command: "custom"
+      customCommand: "run build:${{parameters.targetEnvironmentNameLowerCase}}"
+
+  - task: CopyFiles@2
+    displayName: "${{parameters.targetEnvironmentNameLowerCase}}: Copy UMD build"
+    inputs:
+      sourceFolder: "$(Build.SourcesDirectory)/dist"
+      contents: "**"
+      targetFolder: "$(Build.ArtifactStagingDirectory)/umd-${{ parameters.targetEnvironmentNameLowerCase }}"
+
+  - publish: "$(Build.ArtifactStagingDirectory)/umd-${{ parameters.targetEnvironmentNameLowerCase }}"
+    artifact: umd-${{ parameters.targetEnvironmentNameLowerCase }}
+    displayName: "${{ parameters.targetEnvironmentNameLowerCase }}: Publish UMD build for CDN"
