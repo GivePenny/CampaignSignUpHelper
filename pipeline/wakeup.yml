@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/main/service-schema.json
+jobs:
+  - job: WakeUp
+    pool: server
+    steps:
+      - task: PublishToAzureServiceBus@1
+        displayName: Ensure build agents scaled up
+        inputs:
+          azureSubscription: GP.ITOps.Build
+          messageBody: Wake up

@@ -10,7 +10,7 @@
     "lint:fix": "npm run lint -- --fix",
     "test": "vitest",
     "test:ci": "vitest --run --reporter default --reporter junit --outputFile test-results.xml",
-    "build:test": "tsc && vite build",
+    "build:test": "tsc && vite build --mode test",
     "build:production": "tsc && vite build --mode production",
     "preview": "vite preview"
   },
