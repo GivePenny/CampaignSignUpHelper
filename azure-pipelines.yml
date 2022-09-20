@@ -7,6 +7,11 @@ trigger:
     include:
       - main
 
+pr:
+  branches:
+    include:
+      - main
+
 stages:
   - stage: Build
     jobs:
@@ -14,6 +19,7 @@ stages:
       - template: pipeline/build.yml
 
   - stage: Test
+    condition: and(succeeded(), eq(variables['build.sourceBranchName'], 'main'))
     variables:
       - group: "Azure shared resource credentials (Test)"
       - name: EnvironmentConfigurationLabel
@@ -36,6 +42,7 @@ stages:
                     environmentLowerCaseName: ${{ variables.EnvironmentConfigurationLabel }}
 
   - stage: Production
+    condition: and(succeeded(), eq(variables['build.sourceBranchName'], 'main'))
     variables:
       - group: "Azure shared resource credentials (Production)"
       - name: EnvironmentConfigurationLabel
