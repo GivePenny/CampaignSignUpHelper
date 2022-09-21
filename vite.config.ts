@@ -1,5 +1,8 @@
 import { resolve } from "path";
 import { defineConfig } from "vite";
+import * as dns from "dns";
+
+dns.setDefaultResultOrder("verbatim");
 
 // https://vitejs.dev/config/
 export default defineConfig({

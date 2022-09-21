@@ -22,7 +22,7 @@ const createAndSubmitValidCampaignSignUpRequest = async () => {
   campaignSignUpRequest.setFirstName(uuid());
   campaignSignUpRequest.setLastName(uuid());
   campaignSignUpRequest.setEmail(uuid());
-  await campaignSignUpRequest.submitSignUpRequest();
+  await campaignSignUpRequest.submit();
   return campaignSignUpRequest;
 };
 
@@ -1248,17 +1248,15 @@ describe("CampaignSignUpRequest", () => {
     });
   });
 
-  describe(".submitSignUp", () => {
+  describe(".submit", () => {
     it("throws an error before setFirstName has been called", () => {
       const campaignSignUpRequest = new CampaignSignUpRequest(
         charityId,
         campaignId
       );
-      expect(() =>
-        campaignSignUpRequest.submitSignUpRequest()
-      ).rejects.toThrowError(
+      expect(() => campaignSignUpRequest.submit()).rejects.toThrowError(
         errorWithLinksToDocumentation(
-          "firstName must be set before submitSignUp can be called"
+          "firstName must be set before submit can be called"
         )
       );
     });
@@ -1269,11 +1267,9 @@ describe("CampaignSignUpRequest", () => {
         campaignId
       );
       campaignSignUpRequest.setFirstName(uuid());
-      expect(() =>
-        campaignSignUpRequest.submitSignUpRequest()
-      ).rejects.toThrowError(
+      expect(() => campaignSignUpRequest.submit()).rejects.toThrowError(
         errorWithLinksToDocumentation(
-          "lastName must be set before submitSignUp can be called"
+          "lastName must be set before submit can be called"
         )
       );
     });
@@ -1285,11 +1281,9 @@ describe("CampaignSignUpRequest", () => {
       );
       campaignSignUpRequest.setFirstName(uuid());
       campaignSignUpRequest.setLastName(uuid());
-      expect(() =>
-        campaignSignUpRequest.submitSignUpRequest()
-      ).rejects.toThrowError(
+      expect(() => campaignSignUpRequest.submit()).rejects.toThrowError(
         errorWithLinksToDocumentation(
-          "email must be set before submitSignUp can be called"
+          "email must be set before submit can be called"
         )
       );
     });
@@ -1303,7 +1297,7 @@ describe("CampaignSignUpRequest", () => {
       campaignSignUpRequest.setLastName(uuid());
       campaignSignUpRequest.setEmail(uuid());
 
-      await campaignSignUpRequest.submitSignUpRequest();
+      await campaignSignUpRequest.submit();
 
       expect(putSignUp).toHaveBeenCalledOnce();
       expect(patchSignUpQuestions).not.toHaveBeenCalled();
@@ -1342,7 +1336,7 @@ describe("CampaignSignUpRequest", () => {
       campaignSignUpRequest.setAdditionalQuestion(uuid(), uuid());
       campaignSignUpRequest.setAdditionalQuestion(uuid(), uuid());
 
-      await campaignSignUpRequest.submitSignUpRequest();
+      await campaignSignUpRequest.submit();
 
       expect(putSignUp).toHaveBeenCalledOnce();
       expect(patchSignUpQuestions).toHaveBeenCalledOnce();
@@ -1387,7 +1381,7 @@ describe("CampaignSignUpRequest", () => {
       campaignSignUpRequest.setAdditionalQuestion(uuid(), uuid());
 
       await campaignSignUpRequest.sendData();
-      await campaignSignUpRequest.submitSignUpRequest();
+      await campaignSignUpRequest.submit();
 
       expect(putSignUp).toHaveBeenCalledTimes(2);
       expect(patchSignUpQuestions).toHaveBeenCalledOnce();
