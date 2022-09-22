@@ -14,13 +14,6 @@ vi.mock("../api/charitiesCampaignsManagement");
 vi.mock("./campaignGroupingsHelper");
 vi.mock("./campaignMeasurementsHelper");
 
-const consoleMock = {
-  log: vi.fn().mockName("log"),
-  error: vi.fn().mockName("error"),
-};
-
-vi.stubGlobal("console", consoleMock);
-
 const campaignSlug = uuid();
 const campaign: CampaignResponse = {
   id: uuid(),
@@ -46,43 +39,32 @@ describe("developmentHelper", () => {
     expect(getCampaignBySlug).toHaveBeenCalledWith(campaignSlug);
   });
 
-  it("should write an error to the console if no campaign is found with the requested slug", async () => {
+  it("should throw an error if no campaign is found with the requested slug", () => {
     vi.mocked(getCampaignBySlug).mockResolvedValue(undefined);
 
-    await getCampaignDetails(campaignSlug);
-
-    expect(console.error).toHaveBeenCalledWith(
-      `Could not find a campaign with slug: ${campaignSlug}`
+    expect(() => getCampaignDetails(campaignSlug)).rejects.toThrowError(
+      new Error(`Could not find a campaign with slug: ${campaignSlug}`)
     );
   });
 
-  it("should write the campaign details to the console when a campaign is found with the requested slug", async () => {
-    await getCampaignDetails(campaignSlug);
+  it("should return the campaign details when a campaign is found with the requested slug", async () => {
+    const campaignDetails = await getCampaignDetails(campaignSlug);
 
-    const lastConsoleLogCallArgument = vi.mocked(console.log).mock
-      .lastCall?.[0];
-
-    expect(lastConsoleLogCallArgument.name).toBe(campaign.name);
-    expect(lastConsoleLogCallArgument.campaignId).toBe(campaign.id);
-    expect(lastConsoleLogCallArgument.charityId).toBe(campaign.charityId);
+    expect(campaignDetails.name).toBe(campaign.name);
+    expect(campaignDetails.campaignId).toBe(campaign.id);
+    expect(campaignDetails.charityId).toBe(campaign.charityId);
   });
 
-  it("should write the campaign details to the console with an empty measuring array when a campaign is found with the requested slug and is not measuring anything", async () => {
-    await getCampaignDetails(campaignSlug);
+  it("should return the campaign details with an empty measuring array when a campaign is found with the requested slug and is not measuring anything", async () => {
+    const campaignDetails = await getCampaignDetails(campaignSlug);
 
-    const lastConsoleLogCallArgument = vi.mocked(console.log).mock
-      .lastCall?.[0];
-
-    expect(lastConsoleLogCallArgument.measuring).toStrictEqual([]);
+    expect(campaignDetails.measuring).toStrictEqual([]);
   });
 
-  it("should write the campaign details to the console with an empty groupings array when a campaign is found with the requested slug has no groupings", async () => {
-    await getCampaignDetails(campaignSlug);
+  it("should return the campaign details when with an empty groupings array when a campaign is found with the requested slug has no groupings", async () => {
+    const campaignDetails = await getCampaignDetails(campaignSlug);
 
-    const lastConsoleLogCallArgument = vi.mocked(console.log).mock
-      .lastCall?.[0];
-
-    expect(lastConsoleLogCallArgument.groupings).toStrictEqual([]);
+    expect(campaignDetails.groupings).toStrictEqual([]);
   });
 
   it("should resolve the groupings details for the campaign when a campaign is found with the requested slug", async () => {
@@ -94,7 +76,7 @@ describe("developmentHelper", () => {
     );
   });
 
-  it("should write the campaign details to the console with the expected groupings array when a campaign is found with the requested slug has groupings", async () => {
+  it("should return the campaign details when with the expected groupings array when a campaign is found with the requested slug has groupings", async () => {
     const groupingsDetails = [
       {
         id: uuid(),
@@ -128,14 +110,9 @@ describe("developmentHelper", () => {
 
     vi.mocked(getCampaignGroupingsDetails).mockResolvedValue(groupingsDetails);
 
-    await getCampaignDetails(campaignSlug);
+    const campaignDetails = await getCampaignDetails(campaignSlug);
 
-    const lastConsoleLogCallArgument = vi.mocked(console.log).mock
-      .lastCall?.[0];
-
-    expect(lastConsoleLogCallArgument.groupings).toStrictEqual(
-      groupingsDetails
-    );
+    expect(campaignDetails.groupings).toStrictEqual(groupingsDetails);
   });
 
   it("should resolve the measurements details for the campaign when a campaign is found", async () => {
@@ -146,7 +123,7 @@ describe("developmentHelper", () => {
     );
   });
 
-  it("should write the campaign details to the console with the expected measuring array when a campaign is found with the requested slug", async () => {
+  it("should return the campaign details when with the expected measuring array when a campaign is found with the requested slug", async () => {
     const measuringDetails = [
       {
         measurementId: uuid(),
@@ -185,11 +162,8 @@ describe("developmentHelper", () => {
       measuringDetails
     );
 
-    await getCampaignDetails(campaignSlug);
+    const campaignDetails = await getCampaignDetails(campaignSlug);
 
-    const lastConsoleLogCallArgument = vi.mocked(console.log).mock
-      .lastCall?.[0];
-
-    expect(lastConsoleLogCallArgument.measuring).toBe(measuringDetails);
+    expect(campaignDetails.measuring).toBe(measuringDetails);
   });
 });

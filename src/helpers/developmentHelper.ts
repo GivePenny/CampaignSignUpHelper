@@ -6,11 +6,10 @@ export const getCampaignDetails = async (campaignSlug: string) => {
   const campaign = await getCampaignBySlug(campaignSlug);
 
   if (!campaign) {
-    console.error(`Could not find a campaign with slug: ${campaignSlug}`);
-    return;
+    throw new Error(`Could not find a campaign with slug: ${campaignSlug}`);
   }
 
-  console.log({
+  return {
     name: campaign.name,
     campaignId: campaign.id,
     charityId: campaign.charityId,
@@ -19,5 +18,5 @@ export const getCampaignDetails = async (campaignSlug: string) => {
       campaign.charityId,
       campaign.id
     ),
-  });
+  };
 };
