@@ -13,6 +13,7 @@ export const getCampaignDetails = async (campaignSlug: string) => {
     name: campaign.name,
     campaignId: campaign.id,
     charityId: campaign.charityId,
+    challengeFeatures: campaign.challengeFeatures,
     measuring: await getCampaignMeasurementsDetails(campaign.measuring),
     groupings: await getCampaignGroupingsDetails(
       campaign.charityId,

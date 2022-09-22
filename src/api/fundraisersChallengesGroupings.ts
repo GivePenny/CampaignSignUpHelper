@@ -5,10 +5,10 @@ const client = createApiClient(
 );
 
 type GroupResponse = {
-  id: string;
-  label: string;
-  imageUrl: string | null;
-  thumbnailImageUrl: string | null;
+  readonly id: string;
+  readonly label: string;
+  readonly imageUrl: string | null;
+  readonly thumbnailImageUrl: string | null;
 };
 
 type SubGroupSettings =
@@ -21,10 +21,10 @@ type SubGroupSettings =
     };
 
 export type GroupingResponse = {
-  id: string;
-  label: string;
-  groups: GroupResponse[];
-  fundraiserDefinedSubGroupSettings: SubGroupSettings;
+  readonly id: string;
+  readonly label: string;
+  readonly groups: GroupResponse[];
+  readonly fundraiserDefinedSubGroupSettings: SubGroupSettings;
 };
 
 export async function getGroupings(
