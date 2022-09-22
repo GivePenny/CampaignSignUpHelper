@@ -20,6 +20,9 @@ const campaign: CampaignResponse = {
   charityId: uuid(),
   measuring: [],
   name: "Test campaign",
+  challengeFeatures: {
+    musicPlaylist: "on",
+  },
 };
 
 describe("developmentHelper", () => {
@@ -53,6 +56,7 @@ describe("developmentHelper", () => {
     expect(campaignDetails.name).toBe(campaign.name);
     expect(campaignDetails.campaignId).toBe(campaign.id);
     expect(campaignDetails.charityId).toBe(campaign.charityId);
+    expect(campaignDetails.challengeFeatures).toBe(campaign.challengeFeatures);
   });
 
   it("should return the campaign details with an empty measuring array when a campaign is found with the requested slug and is not measuring anything", async () => {

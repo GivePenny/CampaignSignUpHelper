@@ -136,25 +136,25 @@ export default class CampaignSignUpRequest {
 
     if (Object.keys(this._additionalQuestions).length === 30) {
       this.throwErrorWithLinksToDocumentation(
-        "A maximum of 30 questions may be added using setMiscellaneousQuestion"
+        "A maximum of 30 questions may be added using setAdditionalQuestion"
       );
     }
 
     if (!question) {
       this.throwErrorWithLinksToDocumentation(
-        "setMiscellaneousQuestion must be passed a value for question"
+        "setAdditionalQuestion must be passed a value for question"
       );
     }
 
     if (question.length > 100) {
       this.throwErrorWithLinksToDocumentation(
-        "setMiscellaneousQuestion may not be passed a value for question longer than 100 characters"
+        "setAdditionalQuestion may not be passed a value for question longer than 100 characters"
       );
     }
 
     if (!answer && answer !== "") {
       this.throwErrorWithLinksToDocumentation(
-        "setMiscellaneousQuestion must be passed a value for answer"
+        "setAdditionalQuestion must be passed a value for answer"
       );
     }
 

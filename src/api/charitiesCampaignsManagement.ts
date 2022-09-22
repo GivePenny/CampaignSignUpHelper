@@ -5,14 +5,18 @@ const client = createApiClient(
 );
 
 type CampaignMeasuringActivityResponse = {
-  activityId: string;
-  targets: { target: number | null }[];
+  readonly activityId: string;
+  readonly targets: { target: number | null }[];
 };
 
 type CampaignMeasuringResponse = {
-  activities: CampaignMeasuringActivityResponse[];
-  measurementId: string;
-  preferredUnitId: string;
+  readonly activities: CampaignMeasuringActivityResponse[];
+  readonly measurementId: string;
+  readonly preferredUnitId: string;
+};
+
+type CampaignChallengeFeaturesResponse = {
+  readonly musicPlaylist: "on" | "off" | "optional";
 };
 
 export type CampaignResponse = {
@@ -20,6 +24,7 @@ export type CampaignResponse = {
   readonly charityId: string;
   readonly name: string;
   readonly measuring: CampaignMeasuringResponse[];
+  readonly challengeFeatures: CampaignChallengeFeaturesResponse;
 };
 
 export async function getCampaignBySlug(
