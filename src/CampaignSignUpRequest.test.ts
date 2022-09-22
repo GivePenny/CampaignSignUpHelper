@@ -453,7 +453,7 @@ describe("CampaignSignUpRequest", () => {
     });
   });
 
-  describe(".setMiscellaneousQuestion", () => {
+  describe(".setAdditionalQuestion", () => {
     it("throws an error when called with an empty string question", () => {
       const campaignSignUpRequest = new CampaignSignUpRequest(
         charityId,
@@ -463,7 +463,7 @@ describe("CampaignSignUpRequest", () => {
         campaignSignUpRequest.setAdditionalQuestion("", uuid())
       ).toThrowError(
         errorWithLinksToDocumentation(
-          "setMiscellaneousQuestion must be passed a value for question"
+          "setAdditionalQuestion must be passed a value for question"
         )
       );
     });
@@ -477,7 +477,7 @@ describe("CampaignSignUpRequest", () => {
         campaignSignUpRequest.setAdditionalQuestion(undefined!, uuid())
       ).toThrowError(
         errorWithLinksToDocumentation(
-          "setMiscellaneousQuestion must be passed a value for question"
+          "setAdditionalQuestion must be passed a value for question"
         )
       );
     });
@@ -491,7 +491,7 @@ describe("CampaignSignUpRequest", () => {
         campaignSignUpRequest.setAdditionalQuestion(null!, uuid())
       ).toThrowError(
         errorWithLinksToDocumentation(
-          "setMiscellaneousQuestion must be passed a value for question"
+          "setAdditionalQuestion must be passed a value for question"
         )
       );
     });
@@ -505,7 +505,7 @@ describe("CampaignSignUpRequest", () => {
         campaignSignUpRequest.setAdditionalQuestion("a".repeat(101), uuid())
       ).toThrowError(
         errorWithLinksToDocumentation(
-          "setMiscellaneousQuestion may not be passed a value for question longer than 100 characters"
+          "setAdditionalQuestion may not be passed a value for question longer than 100 characters"
         )
       );
     });
@@ -519,7 +519,7 @@ describe("CampaignSignUpRequest", () => {
         campaignSignUpRequest.setAdditionalQuestion(uuid(), undefined!)
       ).toThrowError(
         errorWithLinksToDocumentation(
-          "setMiscellaneousQuestion must be passed a value for answer"
+          "setAdditionalQuestion must be passed a value for answer"
         )
       );
     });
@@ -533,7 +533,7 @@ describe("CampaignSignUpRequest", () => {
         campaignSignUpRequest.setAdditionalQuestion(uuid(), null!)
       ).toThrowError(
         errorWithLinksToDocumentation(
-          "setMiscellaneousQuestion must be passed a value for answer"
+          "setAdditionalQuestion must be passed a value for answer"
         )
       );
     });
@@ -562,7 +562,7 @@ describe("CampaignSignUpRequest", () => {
         campaignSignUpRequest.setAdditionalQuestion(uuid(), uuid())
       ).toThrowError(
         errorWithLinksToDocumentation(
-          "A maximum of 30 questions may be added using setMiscellaneousQuestion"
+          "A maximum of 30 questions may be added using setAdditionalQuestion"
         )
       );
     });
@@ -581,7 +581,7 @@ describe("CampaignSignUpRequest", () => {
   });
 
   describe(".miscellaneousQuestions", () => {
-    it("returns empty object before setMiscellaneousQuestion has been called", () => {
+    it("returns empty object before setAdditionalQuestion has been called", () => {
       const campaignSignUpRequest = new CampaignSignUpRequest(
         charityId,
         campaignId
@@ -589,7 +589,7 @@ describe("CampaignSignUpRequest", () => {
       expect(campaignSignUpRequest.additionalQuestions).toStrictEqual({});
     });
 
-    it("returns the expected value after setMiscellaneousQuestion has been called", () => {
+    it("returns the expected value after setAdditionalQuestion has been called", () => {
       const campaignSignUpRequest = new CampaignSignUpRequest(
         charityId,
         campaignId
@@ -606,7 +606,7 @@ describe("CampaignSignUpRequest", () => {
       });
     });
 
-    it("returns the expected value after setMiscellaneousQuestion has been called with the same question twice", () => {
+    it("returns the expected value after setAdditionalQuestion has been called with the same question twice", () => {
       const campaignSignUpRequest = new CampaignSignUpRequest(
         charityId,
         campaignId
