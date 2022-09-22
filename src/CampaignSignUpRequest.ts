@@ -235,24 +235,24 @@ export default class CampaignSignUpRequest {
     this._isOptedInToMarketing = isOptedInToMarketing;
   }
 
-  public async submitSignUpRequest() {
+  public async submit() {
     this.throwIfHasBeenSubmitted();
 
     if (!this._firstName) {
       this.throwErrorWithLinksToDocumentation(
-        "firstName must be set before submitSignUp can be called"
+        "firstName must be set before submit can be called"
       );
     }
 
     if (!this._lastName) {
       this.throwErrorWithLinksToDocumentation(
-        "lastName must be set before submitSignUp can be called"
+        "lastName must be set before submit can be called"
       );
     }
 
     if (!this._email) {
       this.throwErrorWithLinksToDocumentation(
-        "email must be set before submitSignUp can be called"
+        "email must be set before submit can be called"
       );
     }
 
